@@ -18,7 +18,7 @@ plot_MappingErrorQC(
 \item{mapQC_class}{Column in query object with mapping error QC status for each cell (either "Pass" or "Fail"). Can set as NULL if no filtering desired.}
 }
 \value{
-Diagnostic QC plots to evaluate the current mapping error QC cutoff.
+Lost of diagnostic QC plots to evaluate the current mapping error QC cutoff.
 }
 \description{
 Low quality cells with low RNA counts and low transcriptional diversity tend to erroneously map to orthochromatic erythroblasts.
