@@ -8,12 +8,11 @@
 #' @param mapQC_class Column in query object with mapping error QC status for each cell (either "Pass" or "Fail"). Can set as NULL if no filtering desired.
 #'
 #' @import ggplot2
-#' @import patchwork
 #' @importFrom ggpubr theme_pubr
 #' @importFrom ggpubr stat_compare_means
 #' @importFrom Seurat DimPlot
 #' @importFrom Seurat PercentageFeatureSet
-#' @return Diagnostic QC plots to evaluate the current mapping error QC cutoff.
+#' @return Lost of diagnostic QC plots to evaluate the current mapping error QC cutoff.
 #' @export
 plot_MappingErrorQC <- function(query, mapQC_values = 'mapping_error_score', mapQC_class = 'mapping_error_QC'){
 
@@ -50,8 +49,9 @@ plot_MappingErrorQC <- function(query, mapQC_values = 'mapping_error_score', map
     ggplot2::ggplot(aes(x = get(mapQC_class), y = pct_Hb, fill = get(mapQC_class))) +
     ggplot2::geom_boxplot(outlier.size = 0.3) + ggpubr::theme_pubr(legend = 'none') +
     ggplot2::ylab('Percent Hemoglobin') + ggplot2::xlab(mapQC_class) + ylim(c(0,100)) + labs(fill = mapQC_class) +
-    ggplot2::ggtitle('MapQC vs % Heme')
+    ggplot2::ggtitle('MapQC vs % Hemoglobin')
 
-  # Plot with patchwork.
-  plot(p1 + p2 + p3 + p4 + patchwork::plot_layout(widths = c(0.8, 0.3, 0.8, 0.3)))
+  # Return as list of plots
+  mapQC_plots <- list('MapQC_Histogram' = p1, 'MapQC_RNAcounts' = p2, 'MapQC_UMAP' = p3, 'MapQC_Hemoglobin' = p4)
+  return(mapQC_plots)
 }
