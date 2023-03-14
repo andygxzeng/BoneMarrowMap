@@ -2,9 +2,7 @@
 % Please edit documentation in R/plot_MappingErrorQC.R
 \name{plot_MappingErrorQC}
 \alias{plot_MappingErrorQC}
-\title{Visualize Mapping error cutoff for QC purposes.
-Low quality cells with low RNA counts and low transcriptional diversity tend to erroneously map to orthochromatic erythroblasts.
-This will help the user to set a mapping error QC threshold to remove these low quality cells}
+\title{Visualize Mapping error cutoff for QC purposes.}
 \usage{
 plot_MappingErrorQC(
   query,
@@ -23,7 +21,6 @@ plot_MappingErrorQC(
 Diagnostic QC plots to evaluate the current mapping error QC cutoff.
 }
 \description{
-Visualize Mapping error cutoff for QC purposes.
 Low quality cells with low RNA counts and low transcriptional diversity tend to erroneously map to orthochromatic erythroblasts.
 This will help the user to set a mapping error QC threshold to remove these low quality cells
 }

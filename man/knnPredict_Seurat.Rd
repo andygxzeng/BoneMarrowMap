@@ -2,8 +2,7 @@
 % Please edit documentation in R/knnPredict_Seurat.R
 \name{knnPredict_Seurat}
 \alias{knnPredict_Seurat}
-\title{KNN Prediction of annotation label from reference to query
-This is modified from the original Seurat_Utils.R script within the Symphony github page}
+\title{KNN Prediction of annotation label from reference to query}
 \usage{
 knnPredict_Seurat(
   query_obj,
@@ -34,6 +33,5 @@ knnPredict_Seurat(
 A Seurat object, with predicted reference labels stored in the 'col_name' column of the meta.data
 }
 \description{
-KNN Prediction of annotation label from reference to query
 This is modified from the original Seurat_Utils.R script within the Symphony github page
 }

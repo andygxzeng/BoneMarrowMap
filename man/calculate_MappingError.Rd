@@ -2,9 +2,7 @@
 % Please edit documentation in R/calculate_MappingError.R
 \name{calculate_MappingError}
 \alias{calculate_MappingError}
-\title{Per-cell Confidence Score:
-Calculates the weighted Mahalanobis distance for the query cells to reference clusters. Returns a vector
-of distance scores, one per query cell. Higher distance metric indicates less confidence.}
+\title{Per-cell Confidence Score:}
 \usage{
 calculate_MappingError(query, reference, MAD.threshold = 2)
 }
@@ -19,7 +17,6 @@ calculate_MappingError(query, reference, MAD.threshold = 2)
 A vector of per-cell mapping metric scores for each cell.
 }
 \description{
-Per-cell Confidence Score:
 Calculates the weighted Mahalanobis distance for the query cells to reference clusters. Returns a vector
 of distance scores, one per query cell. Higher distance metric indicates less confidence.
 }

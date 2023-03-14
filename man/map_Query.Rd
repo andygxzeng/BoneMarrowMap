@@ -2,8 +2,7 @@
 % Please edit documentation in R/map_Query.R
 \name{map_Query}
 \alias{map_Query}
-\title{Function for mapping query data to Bone Marrow Reference
-This is modified from the original Seurat_Utils.R function script within the Symphony github page}
+\title{Map Query}
 \usage{
 map_Query(
   exp_query,
@@ -34,7 +33,7 @@ map_Query(
 \item{sigma}{Fuzziness parameter for soft clustering (sigma = 1 is hard clustering). Default is 0.1}
 }
 \value{
-A Seurat object with mapped harmony and umap embeddings. Expression data is in the SymphonyQuery
+A Seurat object with mapped harmony and umap embeddings. Expression data is in the RNA
 }
 \description{
 Function for mapping query data to Bone Marrow Reference

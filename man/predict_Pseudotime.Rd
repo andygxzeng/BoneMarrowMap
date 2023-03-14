@@ -2,10 +2,7 @@
 % Please edit documentation in R/predict_Pseudotime.R
 \name{predict_Pseudotime}
 \alias{predict_Pseudotime}
-\title{Annotate Hematopoietic Hierarchy Pseudotime metric
-Assigns each query cell the median pseudotime of k-nearest neighbours by UMAP from the reference map.
-Provides initial estimates for all cells regardless of mapping QC filter
-Provides final estimates for mapQC passing cells and assigns mapQC failing cells as NA.}
+\title{Annotate Hematopoietic Hierarchy Pseudotime metric}
 \usage{
 predict_Pseudotime(
   query_obj,
@@ -36,7 +33,6 @@ predict_Pseudotime(
 A Seurat object, with annotated pseudotime labels stored in the 'final_label' column of the meta.data.
 }
 \description{
-Annotate Hematopoietic Hierarchy Pseudotime metric
 Assigns each query cell the median pseudotime of k-nearest neighbours by UMAP from the reference map.
 Provides initial estimates for all cells regardless of mapping QC filter
 Provides final estimates for mapQC passing cells and assigns mapQC failing cells as NA.
