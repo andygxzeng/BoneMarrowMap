@@ -1,11 +1,15 @@
 ---
-title: "Bone Marrow Reference Map Projection"
-output:
-  html_document:
-    pdf_print: paged
+title: "R Notebook"
+output: html_notebook
 ---
 
 ## Bone Marrow Reference Map Projection Tutorial
+
+Here we will map an example dataset from Roy et al (Cell Rep 2019) comprising 12,245 CD34+ cells from fetal and adult bone marrow.
+Note that any human hematopoietic cells, regardless of tissue source or disease status, can be mapped to this reference.
+This tutorial will take approximately 10 minutes to run
+
+### Setup
 
 ```{r}
 library(Seurat)
@@ -22,11 +26,14 @@ devtools::install_github('andygxzeng/BoneMarrowMap')
 library(BoneMarrowMap)
 ```
 
+
+#### Download reference object and UMAP model
+
 Set projection folder, Download reference object and UMAP model
 
 ```{r}
 # Set directory to store projection reference files
-projection_path = '../ProjectionTools/'
+projection_path = './'
 
 # Download Bone Marrow Reference - 344 Mb
 curl::curl_download('https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrow_RefMap_SymphonyRef.rds', 
@@ -40,6 +47,9 @@ ref <- readRDS(paste0(projection_path, 'BoneMarrow_RefMap_SymphonyRef.rds'))
 # Set uwot path for UMAP projection
 ref$save_uwot_path <- paste0(projection_path, 'BoneMarrow_RefMap_uwot_model.uwot')
 ```
+
+
+#### Visualize Bone Marrow Reference
 
 If we want to visualize celltype labels or metadata from the BM Reference, we can create a Seurat Object from the symphony reference 
 This will be memory efficient as it will not include gene expression counts, only the UMAP coordinates and the metadata including cell labels and sorting information
@@ -60,7 +70,8 @@ p2 <- FeaturePlot(ReferenceSeuratObj, reduction = 'umap', features = 'Pseudotime
 p1 + p2
 ```
 
-### Load Query Seurat object
+
+#### Load Query Seurat object
 Example Query object is a subset of data from Roy et al (Cell Reports 2021), incorporating CD34p cells from an adult bone marrow sample and a fetal bone marrow sample. Here, we prefer raw count data without normalization.
 
 Input does not need to be a seurat object, can load raw count matrix and metadata separately
@@ -77,7 +88,7 @@ query
 
 ### Map the Query Data
 Provide raw counts, metadata, and donor key. This should take <1 min
-Calculate mapping error and perform QC to remove outliers with high mapping error
+Calculate mapping error and perform QC to remove low quality cells with high mapping error
 
 ```{r}
 # batch variable to correct in the query data, set as NULL if no batches in query
@@ -136,7 +147,7 @@ DimPlot(subset(query, mapping_error_QC == 'Pass'), reduction = 'umap', group.by 
 ```
 
 
-### Pseudotime Annotations
+#### Pseudotime Annotations
 We can also annotate each query cell based on their position along hematopoietic pseudotime. 
 Query cells will be assigned a pseudotime score based on the 30 K-Nearest Neighbours from the reference map.
 Since our Pseudotime KNN assignments are performed in UMAP space (more accurate than KNN on harmony components), this step is very fast (< 10s)
@@ -173,7 +184,7 @@ save_ProjectionResults(
 
 Now let's visualize the density distribution of query cells across the hematopoietic hierarchy
 
-```{r}
+```{r, fig.height=3, fig.width=9}
 # Set batch/condition to be visualized individually
 batch_key <- 'sampleID'
 
@@ -196,7 +207,7 @@ patchwork::wrap_plots(projection_plots)
 
 We can also set Hierarchy_only = TRUE to remove T/NK/Plasma/Stromal cells and focus solely on the hematopoietic hierarchy.
 
-```{r}
+```{r, fig.height=3, fig.width=8}
 # Set batch/condition to be visualized individually
 batch_key <- 'sampleID'
 
@@ -229,25 +240,47 @@ Here, to study the abundance of each cell type within each donor, I focus on cel
 We can present this as a long table
 
 ```{r}
-query_composition <- get_Composition(query, donor_key = 'sampleID', celltype_label = 'predicted_CellType', 
-                                     mapQC_col = 'mapping_error_QC', knn_prob_cutoff = NULL, return_type = 'long')
+query_composition <- get_Composition(
+  query_obj = query, 
+  donor_key = 'sampleID', 
+  celltype_label = 'predicted_CellType', 
+  mapQC_col = 'mapping_error_QC', 
+  knn_prob_cutoff = NULL, 
+  return_type = 'long')
+
 query_composition 
 ```
 
 Or as a wide table with counts of # of cells
 
 ```{r}
-query_composition <- get_Composition(query, donor_key = 'sampleID', celltype_label = 'predicted_CellType', 
-                                     mapQC_col = 'mapping_error_QC', knn_prob_cutoff = NULL, return_type = 'count')
+query_composition <- get_Composition(
+  query_obj = query, 
+  donor_key = 'sampleID', 
+  celltype_label = 'predicted_CellType', 
+  mapQC_col = 'mapping_error_QC', 
+  knn_prob_cutoff = NULL, 
+  return_type = 'count')
+
 query_composition 
 ```
 
 Or as a wide table with proportion of each cell type within each donor
 
 ```{r}
-query_composition <- get_Composition(query, donor_key = 'sampleID', celltype_label = 'predicted_CellType', 
-                                     mapQC_col = 'mapping_error_QC', knn_prob_cutoff = NULL, return_type = 'proportion')
+query_composition <- get_Composition(
+  query_obj = query, 
+  donor_key = 'sampleID', 
+  celltype_label = 'predicted_CellType', 
+  mapQC_col = 'mapping_error_QC', 
+  knn_prob_cutoff = NULL, 
+  return_type = 'proportion')
+
 query_composition 
+```
+
+```{r}
+query_composition
 ```
 
 ```{r}
@@ -255,6 +288,3 @@ query_composition
 p <- query_composition %>% column_to_rownames('sampleID') %>% data.matrix() %>% ComplexHeatmap::Heatmap()
 p
 ```
-
-
-
