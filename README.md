@@ -26,7 +26,7 @@ install_github('andygxzeng/BoneMarrowMap')
 
 ## [In-Depth Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html)
 
-We prove an [in-depth tutorial notebook](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html) for downloading the reference object and an example query dataset (Roy et al, Cell Rep 2021) and performing mapping, celltype classification, pseudotime prediction, and composition analysis on the query dataset.
+We provide an [in-depth tutorial notebook](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html) for downloading the reference object and an example query dataset (Roy et al, Cell Rep 2021) and performing reference mapping, celltype classification, pseudotime prediction, and composition analysis on the example query dataset.
 
 You can substitute the example dataset for your own scRNA-seq data. All you need is a raw or ambient RNA-corrected count matrix and cell annotations, ideally within a seurat object. Your data should be pre-filtered by n_counts, n_features, and percent_mito before mapping.
 
