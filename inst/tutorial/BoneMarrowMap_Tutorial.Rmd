@@ -1,9 +1,7 @@
 ---
-title: "R Notebook"
+title: "Bone Marrow Reference Map Projection Tutorial"
 output: html_notebook
 ---
-
-## Bone Marrow Reference Map Projection Tutorial
 
 Here we will map an example dataset from Roy et al (Cell Rep 2019) comprising 12,245 CD34+ cells from fetal and adult bone marrow.
 Note that any human hematopoietic cells, regardless of tissue source or disease status, can be mapped to this reference.
