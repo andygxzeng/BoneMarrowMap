@@ -1,4 +1,5 @@
 #' Per-cell Confidence Score:
+#'
 #' Calculates the weighted Mahalanobis distance for the query cells to reference clusters. Returns a vector
 #' of distance scores, one per query cell. Higher distance metric indicates less confidence.
 #'

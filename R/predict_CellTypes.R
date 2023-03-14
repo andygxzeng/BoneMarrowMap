@@ -1,4 +1,5 @@
 #' KNN Prediction of Hematopoietic Cell Types
+#'
 #' Uses knnPredict_Seurat to classify celltypes based on nearest neighbours from reference
 #' Provides initial estimates for all cells regardless of mapping QC filter
 #' Provides final estimates for mapQC passing cells and assigns mapQC failing cells as NA.

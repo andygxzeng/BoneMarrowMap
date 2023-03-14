@@ -1,4 +1,5 @@
 #' Annotate Hematopoietic Hierarchy Pseudotime metric
+#'
 #' Assigns each query cell the median pseudotime of k-nearest neighbours by UMAP from the reference map.
 #' Provides initial estimates for all cells regardless of mapping QC filter
 #' Provides final estimates for mapQC passing cells and assigns mapQC failing cells as NA.

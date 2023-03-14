@@ -1,4 +1,5 @@
 #' Visualize Mapping error cutoff for QC purposes.
+#'
 #' Low quality cells with low RNA counts and low transcriptional diversity tend to erroneously map to orthochromatic erythroblasts.
 #' This will help the user to set a mapping error QC threshold to remove these low quality cells
 #'
