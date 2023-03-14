@@ -20,7 +20,7 @@ library(patchwork)
 Install package from github
 
 ```{r}
-devtools::install_github('andygxzeng/BoneMarrowMap')
+devtools::install_github('andygxzeng/BoneMarrowMap', force = TRUE)
 library(BoneMarrowMap)
 ```
 
@@ -107,8 +107,13 @@ Now that the data is mapped, we will evaluate the mapping QC metrics and flag ce
 # Run QC based on mapping error score, flag cells with mapping error >= 2.5 MADs above median
 query <- query %>% calculate_MappingError(., reference = ref, MAD.threshold = 2.5) 
 
-plot_MappingErrorQC(query)
+# Get QC Plots
+QC_plots <- plot_MappingErrorQC(query)
+
+# Plot together - If this is too crowded, can also just call "QC_plots" aloneto display one by one
+patchwork::wrap_plots(QC_plots, ncol = 4, widths = c(0.8, 0.3, 0.8, 0.3))
 ```
+
 
 This important step identifies a subset of cells with high mapping error from the query dataset that are either:
   1) not present within the reference, or
@@ -163,6 +168,7 @@ query <- predict_Pseudotime(
 FeaturePlot(subset(query, mapping_error_QC == 'Pass'), features = c('predicted_Pseudotime'))
 ```
 
+
 ### Save projection results
 
 This will save a csv file with the mapped annotations for each cell (mapping error scores, umap coordinates, predicted Cell Type, and predicted Pseudotime)
@@ -199,8 +205,8 @@ projection_plots <- plot_Projection_byDonor(
   save_folder = 'projectionFigures/'
 )
 
-# show plots together with patchwork
-patchwork::wrap_plots(projection_plots)
+# show plots together with patchwork. Can also just call "projection_plots" object to display one-by-one
+patchwork::wrap_plots(projection_plots, ncol = 2)
 ```
 
 We can also set Hierarchy_only = TRUE to remove T/NK/Plasma/Stromal cells and focus solely on the hematopoietic hierarchy.
@@ -222,13 +228,15 @@ projection_plots <- plot_Projection_byDonor(
   save_folder = 'projectionFigures/'
 )
 
-# show plots together with patchwork
-patchwork::wrap_plots(projection_plots)
+# show plots together with patchwork. Can also just call "projection_plots" object to display one-by-one
+patchwork::wrap_plots(projection_plots, ncol = 2)
 ```
 
 Note how cell composition differs between CD34p sorted Adult Bone Marrow and Fetal Bone Marrow within the Roy 2021 dataset. 
 Notably, Adult bone marrow is enriched for more early HSC/MPP and LMPP cells and also MEP & Early Erythroid lineages. 
 In contrast, Fetal bone marrow is highly enriched for MLP and B cell progenitors. 
+
+We can also compare the mapping of these samples along Hematopoietic pseudotime:
 
 
 ### Get Composition data for each donor
@@ -277,9 +285,6 @@ query_composition <- get_Composition(
 query_composition 
 ```
 
-```{r}
-query_composition
-```
 
 ```{r}
 # Simple heatmap to visualize composition of projected samples
