@@ -2,9 +2,8 @@
 
 ### Rapid and accurate projection of scRNA-seq data onto a curated atlas of Bone Marrow hematopoiesis with balanced representation of HSPCs and differentiated cells.
 
-Our goal in developing this resource is to provide a large-scale and comprehensive reference atlas of human hematopoiesis in the bone marrow, 
-and critically to ensure balanced representation of CD34+ stem and progenitor cells together with CD34- terminally differentiated populations.
-This provides us with deep portraits of lineage transitions in both early and late stages of human hematopoiesis. 
+We provide a large-scale reference atlas of human hematopoiesis with balanced representation of CD34+ stem and progenitor cells together with terminally differentiated populations.
+Our reference map of 263,159 hematopoietic cells provides us with deep portraits of lineage transitions in both early and late stages of human hematopoiesis. 
 
 HSPC annotations within this atlas were carefully validated to maximize concordance with immunophenotypically pure populations
 established through decades of functional studies. In particular, our transcriptional HSC state is highly concordant with functional LT-HSCs.
@@ -15,7 +14,10 @@ Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Compositi
 
 This package is in active development. Pre-print coming soon.
 
-### Installation
+![BoneMarrowMap](https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/BoneMarrow_ReferenceMap_Annotated.png)
+
+
+## Installation
 
 ```
 library(devtools)
@@ -39,6 +41,15 @@ Through a few chunks of code, we will:
   - Map the query dataset and filter out low-quality cells 
   - Predict Hematopoietic Cell Type and Pseudotime score for each query cell
   - Visualize projection results and save the mapping results 
+  
+```
+library(Seurat)
+library(tidyverse)
+library(symphony)
+library(ggpubr)
+library(patchwork)
+library(BoneMarrowMap)
+```
 
 ### Download reference object and UMAP model 
 
