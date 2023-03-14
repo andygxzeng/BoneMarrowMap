@@ -28,9 +28,9 @@ install_github('andygxzeng/BoneMarrowMap')
 
 We prove an [in-depth tutorial notebook](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html) for downloading the reference object and an example query dataset (Roy et al, Cell Rep 2021) and performing mapping, celltype classification, pseudotime prediction, and composition analysis on the query dataset.
 
-You can substitute the example query dataset for your own scRNA-seq data. All you need is a raw or ambient RNA-corrected count matrix and cell annotations, ideally within a basic seurat object. While we do have a mapping error filtering step, it is preferable that you pre-filter your data by n_counts, n_features, and percent_mito before attempting to map your dataset.
+You can substitute the example dataset for your own scRNA-seq data. All you need is a raw or ambient RNA-corrected count matrix and cell annotations, ideally within a seurat object. Your data should be pre-filtered by n_counts, n_features, and percent_mito before mapping.
 
-Query mapping is effective across scRNA-seq sequencing technologies and hematopoietic tissues, and we also have used this extensively for mapping leukemic blasts. Caveats are lack of coverage of mature Neutrophils (due to limitations of 10x) and T-lymphoid precursors (due to tissue source).
+Query mapping is effective across sequencing technologies and hematopoietic tissues, and we have also used this extensively for mapping leukemic blasts. Limitations include lack of coverage of mature Neutrophils (due to limitations in 10x technology) and T-cell precursors (due to tissue source).
 
 To run the tutorial within R markdown, you can download the Rmd file directly from your R console and get started on the tutorial:
 ```
