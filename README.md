@@ -13,11 +13,25 @@ We provide functions to rapidly and accurately map query scRNA-seq profiles of e
 Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Composition analysis can be performed from raw count matrices within minutes
 (~10min total for ~10,000 cells on a personal laptop).
 
+This package is in active development. Pre-print coming soon.
+
+### Installation
+
+```
+library(devtools)
+install_github('andygxzeng/BoneMarrowMap')
+```
+
+## [In-Depth Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html)
+
+We prove an [in-depth tutorial notebook](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html) for downloading the reference object and an example query dataset (Roy et al, Cell Rep 2021) and performing mapping, celltype classification, pseudotime prediction, and composition analysis on the query dataset.
+
+You can substitute the example query dataset for your own scRNA-seq data. All you need is a raw or ambient RNA-corrected count matrix and cell annotations, ideally within a basic seurat object. While we do have a mapping error filtering step, it is preferable that you pre-filter your data by n_counts, n_features, and percent_mito before attempting to map your dataset.
+
+Query mapping is effective across scRNA-seq sequencing technologies and hematopoietic tissues, and we also have used this extensively for mapping leukemic blasts. Caveats are lack of coverage of mature Neutrophils (due to limitations of 10x) and T-lymphoid precursors (due to tissue source).
 
 
-
-
-## Quick Start
+## Quick Start Guide
 
 Through a few chunks of code, we will: 
   - Download and visualize the annotated Bone Marrow Reference Atlas
@@ -25,7 +39,6 @@ Through a few chunks of code, we will:
   - Map the query dataset and filter out low-quality cells 
   - Predict Hematopoietic Cell Type and Pseudotime score for each query cell
   - Visualize projection results and save the mapping results 
-  
 
 ### Download reference object and UMAP model 
 
