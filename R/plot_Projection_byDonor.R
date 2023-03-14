@@ -21,6 +21,8 @@ plot_Projection_byDonor <- function(query_obj, batch_key, ref_obj, Hierarchy_onl
     stop('Label \"{batch_key}\" is not available in the query metadata.')
   }
 
+  donor_plots <- list()
+
   # Loop through donors / variables from batch key
   for(donor in unique(query_obj@meta.data[[batch_key]]) ){
 
