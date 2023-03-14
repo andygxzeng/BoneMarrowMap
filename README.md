@@ -32,6 +32,12 @@ You can substitute the example query dataset for your own scRNA-seq data. All yo
 
 Query mapping is effective across scRNA-seq sequencing technologies and hematopoietic tissues, and we also have used this extensively for mapping leukemic blasts. Caveats are lack of coverage of mature Neutrophils (due to limitations of 10x) and T-lymphoid precursors (due to tissue source).
 
+To run the tutorial within R markdown, you can download the Rmd file directly from your R console and get started on the tutorial:
+```
+# Download R Notebook with mapping tutorial
+download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/BoneMarrowMap_Tutorial.Rmd', 
+              destfile = 'BoneMarrowMap_Tutorial.Rmd')
+```
 
 ## Quick Start Guide
 
