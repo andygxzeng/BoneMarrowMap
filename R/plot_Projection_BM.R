@@ -68,9 +68,9 @@ plot_Projection_BM <- function(query_obj, batch_key, sample_name, ref_obj, Hiera
     }
     if(Hierarchy_only){
       if(device %in% c('pdf', 'PDF', 'Pdf')){
-        ggsave(paste0(save_folder, 'density_', sample_name, '_projectedUMAP_HierarchyOnly.pdf'), height = 4, width = 5, device = 'pdf')
+        ggsave(paste0(save_folder, 'density_', sample_name, '_projectedUMAP_HierarchyOnly.pdf'), height = 4, width = 4.5, device = 'pdf')
       } else if(device %in% c('png', 'PNG', 'Png')){
-        ggsave(paste0(save_folder, 'density_', sample_name, '_projectedUMAP_HierarchyOnly.png'), height = 4, width = 5, device = 'png', dpi = 240)
+        ggsave(paste0(save_folder, 'density_', sample_name, '_projectedUMAP_HierarchyOnly.png'), height = 4, width = 4.5, device = 'png', dpi = 240)
       } else {
         stop('Please specify device as either a pdf or png.')
       }
