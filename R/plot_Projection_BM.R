@@ -42,7 +42,7 @@ plot_Projection_BM <- function(query_obj, batch_key, sample_name, ref_obj, Hiera
   }
 
   # Prepare background from Reference UMAP
-  background <- data.frame(ref$umap$embedding) %>% dplyr::rename(umap_1 = X1, umap_2 = X2)
+  background <- data.frame(ref_obj$umap$embedding) %>% dplyr::rename(umap_1 = X1, umap_2 = X2)
   if(Hierarchy_only){
     background <- background %>% dplyr::filter(umap_1 > -5)
   }
