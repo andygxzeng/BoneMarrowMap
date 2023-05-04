@@ -21,7 +21,8 @@ This package is in active development. Pre-print coming soon.
 
 ```
 library(devtools)
-install_github('andygxzeng/BoneMarrowMap')
+devtools::install_github("jaredhuling/jcolors") # dependency that is no longer on CRAN
+devtools::install_github('andygxzeng/BoneMarrowMap')
 ```
 
 ## [In-Depth Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html)
