@@ -5,6 +5,7 @@
 #' @param celltype_label Column in query metadata with projected CellType classification.
 #' @param celltype_KNNprob_label Column in query metadata with KNN probabilities of the projected CellType classification.
 #' @param pseudotime_label Column in query metadata with predicted Pseudotime values
+#' @param save_AUCell_scores Boolean. Whether to save AUCell scores along with projection results. If TRUE, looks for metadata columns with suffix '_AUC' and saves those columns. This only works if AUCell scores are saved to the metadata. If you have them saved as an assay within the seurat object, please just save the seurat object with saveRDS.
 #'
 #' @import dplyr
 #' @importFrom tibble rownames_to_column
@@ -12,7 +13,8 @@
 #' @return Saves a csv file with projected annotations to file_name
 #' @export
 save_ProjectionResults = function(query_obj, file_name, celltype_label = 'predicted_CellType',
-                                  celltype_KNNprob_label = 'predicted_CellType_prob', pseudotime_label = 'predicted_Pseudotime'){
+                                  celltype_KNNprob_label = 'predicted_CellType_prob', pseudotime_label = 'predicted_Pseudotime',
+                                  save_AUCell_scores = FALSE){
 
   if(is.null(celltype_label)){
     warning('Label \"{celltype_label}\" set to NULL. This column will not be saved to annotation file')
@@ -51,6 +53,11 @@ save_ProjectionResults = function(query_obj, file_name, celltype_label = 'predic
   # Add pseudotime annotations if not null
   if(!is.null(pseudotime_label)){
     projection_results <- projection_results %>% dplyr::bind_cols(query_obj@meta.data %>% dplyr::select(all_of(pseudotime_label)))
+  }
+
+  # Save AUCell Scores if specified
+  if(save_AUCell_scores == TRUE){
+    projection_results <- projection_results %>% dplyr::bind_cols(query_obj@meta.data %>% dplyr::select(contains('_AUC')))
   }
 
   # Save as csv
