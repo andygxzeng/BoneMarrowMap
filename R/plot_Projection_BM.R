@@ -34,7 +34,7 @@ plot_Projection_BM <- function(query_obj, batch_key, sample_name, ref_obj, Hiera
   # Prepare query_obj data for that sample
   dat <- query_obj@meta.data %>% tibble::rownames_to_column('Cell') %>%
     dplyr::filter(.data[[batch_key]] == sample_name) %>%
-    dplyr::left_join(query_obj@reductions$umap@cell.embeddings %>% data.frame() %>% tibble::rownames_to_column('Cell') ) %>%
+    dplyr::left_join(query_obj@reductions$umap@cell.embeddings %>% data.frame() %>% tibble::rownames_to_column('Cell'), by = 'Cell') %>%
     dplyr::filter(mapping_error_QC == 'Pass') %>%
     dplyr::mutate(ref_query = 'query')
   if(Hierarchy_only){
