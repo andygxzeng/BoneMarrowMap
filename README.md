@@ -33,7 +33,7 @@ We provide an [in-depth tutorial notebook](https://htmlpreview.github.io/?https:
 
 You can substitute the example dataset for your own scRNA-seq data. All you need is a raw or ambient RNA-corrected count matrix and cell annotations, ideally within a seurat object. Your data should be pre-filtered by n_counts, n_features, and percent_mito before mapping.
 
-Query mapping is effective across sequencing technologies and hematopoietic tissues, and we have also used this extensively for mapping leukemic blasts. Limitations include lack of coverage of mature Neutrophils (due to limitations in 10x technology) and T-cell precursors (due to tissue source).
+Query mapping is effective across sequencing technologies and hematopoietic tissues. Limitations include lack of coverage of mature Neutrophils (due to limitations in 10x technology) and T-cell precursors (due to tissue source).
 
 To run the tutorial within R markdown, you can download the Rmd file directly from your R console and get started on the tutorial:
 ```
@@ -41,6 +41,14 @@ To run the tutorial within R markdown, you can download the Rmd file directly fr
 download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/BoneMarrowMap_Tutorial.Rmd', 
               destfile = 'BoneMarrowMap_Tutorial.Rmd')
 ```
+
+## [Leukemia Projection Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/LeukemiaProjection_Tutorial.nb.html)
+
+We have also used this tool extensively for the mapping of leukemic blasts spanning all various acute and chronic leukemias, except T-ALL. Classification of leukemia depends on  lineage-specific features identified by morphology and immunophenotyping. Projection of individual leukemic blasts based on thousands of transcriptomic lineage markers enables precise mapping of cellular states beyond what can be achieved in the clinic today. 
+
+After completing the standard tutorial, please see the [leukemia projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/LeukemiaProjection_Tutorial.nb.html) to download an example dataset of three diverse AMLs and perform mapping, classification, pseudotime prediction, and composition analysis. This tutorial covers special considerations in mapping QC for leukemia samples and provides additional functions to score leukemia cells for functionally validated LSC signatures. 
+
+
 
 ## Quick Start Guide
 
