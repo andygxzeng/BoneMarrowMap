@@ -9,7 +9,8 @@ save_ProjectionResults(
   file_name,
   celltype_label = "predicted_CellType",
   celltype_KNNprob_label = "predicted_CellType_prob",
-  pseudotime_label = "predicted_Pseudotime"
+  pseudotime_label = "predicted_Pseudotime",
+  save_AUCell_scores = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ save_ProjectionResults(
 \item{celltype_KNNprob_label}{Column in query metadata with KNN probabilities of the projected CellType classification.}
 
 \item{pseudotime_label}{Column in query metadata with predicted Pseudotime values}
+
+\item{save_AUCell_scores}{Boolean. Whether to save AUCell scores along with projection results. If TRUE, looks for metadata columns with suffix '_AUC' and saves those columns. This only works if AUCell scores are saved to the metadata. If you have them saved as an assay within the seurat object, please just save the seurat object with saveRDS.}
 }
 \value{
 Saves a csv file with projected annotations to file_name

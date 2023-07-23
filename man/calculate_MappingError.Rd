@@ -4,14 +4,24 @@
 \alias{calculate_MappingError}
 \title{Per-cell Confidence Score:}
 \usage{
-calculate_MappingError(query, reference, MAD.threshold = 2)
+calculate_MappingError(
+  query,
+  reference,
+  MAD_threshold = 2.5,
+  threshold_by_donor = FALSE,
+  donor_key = NULL
+)
 }
 \arguments{
 \item{query}{Query Seurat object as returned by map_Query()}
 
 \item{reference}{Custom Symphony Reference object with covariance matrix for centroids}
 
-\item{MAD.threshold}{Median absolute deviation cutoff to identify query cells with low-quality mapping}
+\item{MAD_threshold}{Median absolute deviation cutoff to identify query cells with low-quality mapping}
+
+\item{threshold_by_donor}{Boolean. Whether to set mapping error threshold specific to each donor based on the distribution of their mapping error score. This is recommended when projecting multiple leukemia samples due to variation in mapping quality by donor.}
+
+\item{donor_key}{Metadata column specifying donor - mapping error threshold will be set within each donor based on the distribution of their mapping error score.}
 }
 \value{
 A vector of per-cell mapping metric scores for each cell.
