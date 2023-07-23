@@ -20,8 +20,10 @@ This package is in active development. Pre-print coming soon.
 ## Installation
 
 ```
-library(devtools)
+# install dependencies 
+BiocManager::install("AUCell")
 devtools::install_github("jaredhuling/jcolors") # dependency that is no longer on CRAN
+# install package
 devtools::install_github('andygxzeng/BoneMarrowMap')
 ```
 
