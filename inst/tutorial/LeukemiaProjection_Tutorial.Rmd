@@ -303,6 +303,8 @@ Here we will load genesets derived from functional studies of LSC+ and LSC- frac
 Further, we will load additional genesets derived from marker genes of leukemia cell populations defined in van Galen et al Cell 2019 and Zeng et al Nature Medicine 2022. Notably, the LSPC-Quiescent population is highly associated with functional LSCs and relapse by deconvolution (Zeng 2022).
 
 ```{r}
+curl::curl_download('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/AML_CellType_Genesets.gmt', 
+                    destfile = paste0(projection_path, 'AML_CellType_Genesets.gmt'))
 AMLgenesets <- load_Genesets_gmt('AML_CellType_Genesets.gmt')
 AMLgenesets %>% summary()
 ```
@@ -352,5 +354,8 @@ For downstream analysis, you can use the projected celltype labels to help annot
 Additional information from pseudotime projection and scoring of LSC-specific signatures can help identify candidate LSCs within the data. 
 
 Finally, for cohorts with many patients composition analysis can be performed to understand how leukemia cell hierarchies vary with patient characteristics and therapy response / relapse. I hope this tutorial was useful and feel free to comment with any questions you may have around projection of leukemia cells or downstream analysis.
+
+
+
 
 
