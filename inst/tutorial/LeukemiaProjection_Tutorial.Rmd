@@ -5,7 +5,7 @@ output: html_notebook
 
 ### Setup
 
-```{r}
+```{r, }
 library(Seurat)
 library(tidyverse)
 library(symphony)
@@ -17,7 +17,9 @@ library(RColorBrewer)
 Install package from github
 
 ```{r}
-devtools::install_github('andygxzeng/BoneMarrowMap', force = TRUE)
+#BiocManager::install("AUCell")
+#devtools::install_github("jaredhuling/jcolors", force = TRUE) # dependency that is no longer on CRAN
+#devtools::install_github('andygxzeng/BoneMarrowMap', force = TRUE)
 library(BoneMarrowMap)
 ```
 
@@ -161,7 +163,8 @@ query <- predict_CellTypes(
   final_label = 'predicted_CellType'  # celltype assignments with map QC failing cells assigned as NA
 ) 
 
-DimPlot(subset(query, mapping_error_QC == 'Pass'), reduction = 'umap', group.by = c('predicted_CellType'), raster=FALSE, label=TRUE, label.size = 4)
+DimPlot(subset(query, mapping_error_QC == 'Pass'), reduction = 'umap', group.by = c('predicted_CellType'), 
+        raster=FALSE, label=TRUE, label.size = 4)
 ```
 
 
@@ -180,7 +183,8 @@ query <- predict_Pseudotime(
 )
 
 # Visualize Hematopoietic Pseudotime in query data
-FeaturePlot(subset(query, mapping_error_QC == 'Pass'), features = c('predicted_Pseudotime'), split.by = 'Patient') & 
+FeaturePlot(subset(query, mapping_error_QC == 'Pass'), 
+            features = c('predicted_Pseudotime'), split.by = 'Patient') & 
   scale_color_gradientn(colors = rev(brewer.pal(11, 'RdBu')))
 ```
 
@@ -281,11 +285,6 @@ query_composition
 
 
 ```{r}
-query_composition %>% select(Patient, colnames(query_composition)[-1][colSums(query_composition[-1]) > 0.02])
-```
-
-
-```{r}
 # Simple heatmap to visualize composition of projected samples
 p <- query_composition %>% 
   # show celltypes present in >1% of total cells
@@ -310,14 +309,9 @@ AMLgenesets %>% summary()
 ```
 
 ```{r}
-query@meta.data <- query@meta.data %>% select(-contains('AUC'))
-```
-
-
-```{r}
 # score genesets by AUCell and add to metadata
 # typically I split the data into batches of 5k-10k cells to conserve memory
-query <- score_Genesets_AUCell(query, genesets = AMLgenesets, nbatches = 2, ncores = 8, output = 'metadata')
+query <- score_Genesets_AUCell(query, genesets = AMLgenesets, nbatches = 1, ncores = 10, output = 'metadata')
 query@meta.data
 ```
 
@@ -325,7 +319,8 @@ Using genes associated with functional LSC+ engraftment capacity (LSC104_Ng2016_
 
 
 ```{r, fig.height=6, fig.width=12}
-FeaturePlot(subset(query, mapping_error_QC == 'Pass'), features = c('LSPC_Quiescent_AUC', 'LSC104_Ng2016_UP_AUC'), 
+FeaturePlot(subset(query, mapping_error_QC == 'Pass'), 
+            features = c('LSPC_Quiescent_AUC', 'LSC104_Ng2016_UP_AUC'), 
             split.by = 'Patient', max.cutoff = 'q99', min.cutoff = 'q5') & 
   scale_color_gradientn(colors = rev(brewer.pal(11, 'RdBu')))
 ```
