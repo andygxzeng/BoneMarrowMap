@@ -37,7 +37,7 @@ Query mapping is effective across sequencing technologies and hematopoietic tiss
 
 To run the tutorial within R markdown, you can download the Rmd file directly from your R console and get started on the tutorial:
 ```
-# Download R Notebook with mapping tutorial
+# Download R Notebook with mapping tutorial 
 download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/BoneMarrowMap_Tutorial.Rmd', 
               destfile = 'BoneMarrowMap_Tutorial.Rmd')
 ```
@@ -48,6 +48,12 @@ We have also used this tool extensively for the mapping of leukemic blasts spann
 
 After completing the standard tutorial, please see the [leukemia projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/LeukemiaProjection_Tutorial.nb.html) to download an example dataset of three diverse AMLs and perform mapping, classification, pseudotime prediction, and composition analysis. This tutorial covers special considerations in mapping QC for leukemia samples and provides additional functions to score leukemia cells for functionally validated LSC signatures. 
 
+To run the leukemia mapping tutorial within R markdown, you can download the Rmd file directly from your R console:
+```
+# Download R Notebook with mapping tutorial for leukemic samples
+download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/LeukemiaProjection_Tutorial.Rmd', 
+              destfile = 'LeukemiaProjection_Tutorial.Rmd')
+```
 
 
 ## Quick Start Guide
