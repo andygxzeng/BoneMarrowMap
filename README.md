@@ -122,7 +122,7 @@ query <- map_Query(
 )
 
 # Run QC based on mapping error score, flag cells with mapping error >= 2.5 MADs above median
-query <- query %>% calculate_MappingError(., reference = ref, MAD.threshold = 2.5) 
+query <- query %>% calculate_MappingError(., reference = ref, MAD_threshold = 2.5) 
 plot_MappingErrorQC(query)
 ```
 
