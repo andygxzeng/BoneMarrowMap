@@ -14,7 +14,7 @@ Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Compositi
 
 This package is in active development. Pre-print coming soon.
 
-![BoneMarrowMap](https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/BoneMarrow_ReferenceMap_Annotated.png)
+![BoneMarrowMap](https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/main/BoneMarrow_ReferenceMap.png)
 
 
 ## Installation
@@ -27,9 +27,9 @@ devtools::install_github("jaredhuling/jcolors") # dependency that is no longer o
 devtools::install_github('andygxzeng/BoneMarrowMap')
 ```
 
-## [In-Depth Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html)
+## [In-Depth Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap_Extras/blob/main/BoneMarrowMap_Tutorial.nb.html)
 
-We provide an [in-depth tutorial notebook](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/BoneMarrowMap_Tutorial.nb.html) for downloading the reference object and an example query dataset (Roy et al, Cell Rep 2021) and performing reference mapping, celltype classification, pseudotime prediction, and composition analysis on the example query dataset.
+We provide an [in-depth tutorial notebook](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap_Extras/blob/main/BoneMarrowMap_Tutorial.nb.html) for downloading the reference object and an example query dataset (Roy et al, Cell Rep 2021) and performing reference mapping, celltype classification, pseudotime prediction, and composition analysis on the example query dataset.
 
 You can substitute the example dataset for your own scRNA-seq data. All you need is a raw or ambient RNA-corrected count matrix and cell annotations, ideally within a seurat object. Your data should be pre-filtered by n_counts, n_features, and percent_mito before mapping.
 
@@ -38,20 +38,20 @@ Query mapping is effective across sequencing technologies and hematopoietic tiss
 To run the tutorial within R markdown, you can download the Rmd file directly from your R console and get started on the tutorial:
 ```
 # Download R Notebook with mapping tutorial 
-download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/BoneMarrowMap_Tutorial.Rmd', 
+download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/blob/main/BoneMarrowMap_Tutorial.Rmd', 
               destfile = 'BoneMarrowMap_Tutorial.Rmd')
 ```
 
-## [Leukemia Projection Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/LeukemiaProjection_Tutorial.nb.html)
+## [Leukemia Projection Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap_Extras/blob/main/LeukemiaProjection_Tutorial.nb.html)
 
 We have also used this tool extensively for the mapping of leukemic blasts spanning all various acute and chronic leukemias, except T-ALL. Classification of leukemia depends on  lineage-specific features identified by morphology and immunophenotyping. Projection of individual leukemic blasts based on thousands of transcriptomic lineage markers enables precise mapping of cellular states beyond what can be achieved in the clinic today. 
 
-After completing the standard tutorial, please see the [leukemia projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap/blob/main/inst/tutorial/LeukemiaProjection_Tutorial.nb.html) to download an example dataset of three diverse AMLs and perform mapping, classification, pseudotime prediction, and composition analysis. This tutorial covers special considerations in mapping QC for leukemia samples and provides additional functions to score leukemia cells for functionally validated LSC signatures. 
+After completing the standard tutorial, please see the [leukemia projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap_Extras/blob/main/LeukemiaProjection_Tutorial.nb.html) to download an example dataset of three diverse AMLs and perform mapping, classification, pseudotime prediction, and composition analysis. This tutorial covers special considerations in mapping QC for leukemia samples and provides additional functions to score leukemia cells for functionally validated LSC signatures. 
 
 To run the leukemia mapping tutorial within R markdown, you can download the Rmd file directly from your R console:
 ```
 # Download R Notebook with mapping tutorial for leukemic samples
-download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap/main/inst/tutorial/LeukemiaProjection_Tutorial.Rmd', 
+download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/blob/main/LeukemiaProjection_Tutorial.Rmd', 
               destfile = 'LeukemiaProjection_Tutorial.Rmd')
 ```
 
