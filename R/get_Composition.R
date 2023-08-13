@@ -29,20 +29,30 @@ get_Composition = function(query_obj, donor_key, celltype_label = 'predicted_Cel
     knn_prob_cutoff <- 0
   }
 
-  # if mapQC col is not NA or NULL
-  if(!is.null(mapQC_col)){
-    if(!is.na(mapQC_col)) {
-      query_composition <- query_obj@meta.data %>%
-        dplyr::filter(.data[[paste0(celltype_label,'_prob')]] > knn_prob_cutoff) %>%
-        dplyr::group_by(.data[[donor_key]], .data[[celltype_label]]) %>%
-        dplyr::summarise(count = n()) %>%
-        dplyr::group_by(.data[[donor_key]]) %>%
-        dplyr::mutate(proportion = count / sum(count)) %>%
-        dplyr::ungroup() %>%
-        dplyr::arrange(-proportion) %>% dplyr::arrange(.data[[donor_key]])
-    }
+  # if mapQC col is NULL
+  if(is.null(mapQC_col)){
+    ## Do not filter on mapping QC
+    query_composition <- query_obj@meta.data %>%
+      dplyr::filter(.data[[paste0(celltype_label,'_prob')]] > knn_prob_cutoff) %>%
+      dplyr::group_by(.data[[donor_key]], .data[[celltype_label]]) %>%
+      dplyr::summarise(count = n()) %>%
+      dplyr::group_by(.data[[donor_key]]) %>%
+      dplyr::mutate(proportion = count / sum(count)) %>%
+      dplyr::ungroup() %>%
+      dplyr::arrange(-proportion) %>% dplyr::arrange(.data[[donor_key]])
+  # if mapQC col is NA
+  } else if(is.na(mapQC_col)) {
+    ## Do not filter on mapping QC
+    query_composition <- query_obj@meta.data %>%
+      dplyr::filter(.data[[paste0(celltype_label,'_prob')]] > knn_prob_cutoff) %>%
+      dplyr::group_by(.data[[donor_key]], .data[[celltype_label]]) %>%
+      dplyr::summarise(count = n()) %>%
+      dplyr::group_by(.data[[donor_key]]) %>%
+      dplyr::mutate(proportion = count / sum(count)) %>%
+      dplyr::ungroup() %>%
+      dplyr::arrange(-proportion) %>% dplyr::arrange(.data[[donor_key]])
   } else {
-    # check mapQC column
+    # since mapQC is neither NULL of NA, check mapQC column
     if (!mapQC_col %in% colnames(query_obj@meta.data)) {
       stop('Label \"{mapQC_col}\" is not available in the query metadata.')
     }
