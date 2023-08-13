@@ -7,6 +7,7 @@
 #' @param nbatches Number of batches to split the Cell x Gene expression matrix into. These will be processed sequentially to save memory.
 #' @param ncores Number of cores to use for parallel computation of AUCell scores.
 #' @param output Preferred output format of AUCell scores. This can either be "metadata", "assay", or "dataframe". "metadata" returns a seurat object with AUCell scores in the metadata. "assay" returns a seurat object with AUCell scores as a separate assay. "dataframe" returns a dataframe with AUCell scores for each cell.
+#' @param assay_name If preferred output is "assay", specify the name of the assay to store the results in. Default is "AUCell".
 #'
 #' @importFrom Seurat GetAssayData
 #' @importFrom Seurat AddMetaData
@@ -15,7 +16,7 @@
 #' @return Depending on output parameter, either a seurat object with AUCell scores within metadata or a separate assay, or AUCell scores as a separate dataframe
 #' @export
 #'
-score_Genesets_AUCell <- function(scrna, genesets, nbatches = 10, ncores = 1, output = c('metadata', 'assay', 'dataframe')){
+score_Genesets_AUCell <- function(scrna, genesets, nbatches = 10, ncores = 1, output = c('metadata', 'assay', 'dataframe'), assay_name = 'AUCell'){
 
   AUCell_scores <- AUCell_batch(Seurat::GetAssayData(scrna, assay = 'RNA', slot = 'counts'), genesets=genesets, num_batches=nbatches, num_cores=ncores)
   colnames(AUCell_scores) <- paste0(colnames(AUCell_scores), "_AUC")
@@ -24,7 +25,7 @@ score_Genesets_AUCell <- function(scrna, genesets, nbatches = 10, ncores = 1, ou
     scrna <- Seurat::AddMetaData(scrna, as.data.frame(AUCell_scores))
     out <- scrna
   }else if(output == 'assay'){
-    scrna[['NMF_AUCell']] <- Seurat::CreateAssayObject(t(AUCell_scores))
+    scrna[[assay_name]] <- Seurat::CreateAssayObject(t(AUCell_scores))
     out <- scrna
   }else if(output == 'dataframe'){
     AUCell_scores <- as.data.frame(AUCell_scores)
