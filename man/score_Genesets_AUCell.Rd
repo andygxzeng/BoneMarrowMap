@@ -9,7 +9,8 @@ score_Genesets_AUCell(
   genesets,
   nbatches = 10,
   ncores = 1,
-  output = c("metadata", "assay", "dataframe")
+  output = c("metadata", "assay", "dataframe"),
+  assay_name = "AUCell"
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ score_Genesets_AUCell(
 \item{ncores}{Number of cores to use for parallel computation of AUCell scores.}
 
 \item{output}{Preferred output format of AUCell scores. This can either be "metadata", "assay", or "dataframe". "metadata" returns a seurat object with AUCell scores in the metadata. "assay" returns a seurat object with AUCell scores as a separate assay. "dataframe" returns a dataframe with AUCell scores for each cell.}
+
+\item{assay_name}{If preferred output is "assay", specify the name of the assay to store the results in. Default is "AUCell".}
 }
 \value{
 Depending on output parameter, either a seurat object with AUCell scores within metadata or a separate assay, or AUCell scores as a separate dataframe
