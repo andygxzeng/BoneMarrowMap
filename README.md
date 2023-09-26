@@ -38,7 +38,7 @@ Query mapping is effective across sequencing technologies and hematopoietic tiss
 To run the tutorial within R markdown, you can download the Rmd file directly from your R console and get started on the tutorial:
 ```
 # Download R Notebook with mapping tutorial 
-download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/blob/main/BoneMarrowMap_Tutorial.Rmd', 
+download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/main/BoneMarrowMap_Tutorial.Rmd', 
               destfile = 'BoneMarrowMap_Tutorial.Rmd')
 ```
 
@@ -51,7 +51,7 @@ After completing the standard tutorial, please see the [leukemia projection tuto
 To run the leukemia mapping tutorial within R markdown, you can download the Rmd file directly from your R console:
 ```
 # Download R Notebook with mapping tutorial for leukemic samples
-download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/blob/main/LeukemiaProjection_Tutorial.Rmd', 
+download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/main/LeukemiaProjection_Tutorial.Rmd', 
               destfile = 'LeukemiaProjection_Tutorial.Rmd')
 ```
 
