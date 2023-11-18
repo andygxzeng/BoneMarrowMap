@@ -24,7 +24,7 @@ plot_MappingErrorQC <- function(query, mapQC_values = 'mapping_error_score', map
   }
 
   # Get Percentage Hemoglobin genes, this is to show that low quality cells mis-mapping to orthochromatic erythroblasts do not actually have Hb expression
-  query <- Seurat::PercentageFeatureSet(query, features = c('HBB', 'HBA1', 'HBA2', 'HBD', 'HBM'), assay = 'RNA', col.name = 'pct_Hb')
+  query <- Seurat::PercentageFeatureSet(query, features = base::intersect(c('HBB', 'HBA1', 'HBA2', 'HBD', 'HBM'), rownames(query@assays$RNA@counts)), assay = 'RNA', col.name = 'pct_Hb')
 
   # Plot Mapping error histogram to identify cutoff at tail of distribution
   p1 <- query@meta.data %>%
