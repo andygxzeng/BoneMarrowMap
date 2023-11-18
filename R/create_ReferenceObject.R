@@ -10,10 +10,11 @@
 #' @export
 #'
 create_ReferenceObject = function(ref_obj){
-  ReferenceSeuratObj <- Seurat::CreateSeuratObject(data.frame(Cell = ref_obj$meta_data$Cell, placeholder = 0) %>% tibble::column_to_rownames('Cell') %>% data.matrix() %>% t(),
-                                                   meta.data = ref_obj$meta_data %>% tibble::column_to_rownames('Cell'),
-                                                   assay='RNA')
-
+    ReferenceSeuratObj <- Seurat::CreateSeuratObject(mat.or.vec(nr = 2, nc = length(ref_obj$meta_data$Cell)) %>% 
+                             `colnames<-`(ref_obj$meta_data$Cell) %>% `rownames<-`(c('var1','var2')),
+                             meta.data = ref_obj$meta_data %>%
+                              tibble::column_to_rownames('Cell'),
+                             assay='RNA')
   refUMAP <- data.frame(ref_obj$umap$embedding) %>% dplyr::rename(umap_1 = X1, umap_2 = X2) %>% data.matrix()
   rownames(refUMAP) <- ref_obj$meta_data$Cell
   ReferenceSeuratObj@reductions[['umap']] <- Seurat::CreateDimReducObject(refUMAP, key='umap_', assay='RNA')
