@@ -11,7 +11,7 @@
 #'
 create_ReferenceObject = function(ref_obj){
     ReferenceSeuratObj <- Seurat::CreateSeuratObject(mat.or.vec(nr = 2, nc = length(ref_obj$meta_data$Cell)) %>% 
-                             `colnames<-`(ref_obj$meta_data$Cell),
+                             `colnames<-`(ref_obj$meta_data$Cell) %>% `rownames<-`(c('var1','var2')),
                              meta.data = ref_obj$meta_data %>%
                               tibble::column_to_rownames('Cell'),
                              assay='RNA')
