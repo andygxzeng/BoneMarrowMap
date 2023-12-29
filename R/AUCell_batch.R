@@ -10,7 +10,6 @@
 #' @importFrom AUCell AUCell_buildRankings
 #' @importFrom AUCell AUCell_calcAUC
 #' @importFrom SummarizedExperiment assay
-#' @import doSNOW
 #' @return A matrix of AUCell scores for each geneset for each cell in the input dataset
 #'
 AUCell_batch <- function(inp_data, genesets, num_batches = 10, num_cores = 1) {
@@ -25,7 +24,9 @@ AUCell_batch <- function(inp_data, genesets, num_batches = 10, num_cores = 1) {
     if (ind2 > num_cells) {
       ind2 <- num_cells
     }
-    gene_rankings <- AUCell::AUCell_buildRankings(inp_data[,ind1:ind2], plotStats = FALSE, nCores = num_cores) #splitByBlocks=TRUE
+    # doMC not available on windows, cannot easily run AUCell in parallel
+    if(Sys.info()[['sysname']] == "Windows") { num_cores = 1 }
+    gene_rankings <- AUCell::AUCell_buildRankings(inp_data[,ind1:ind2], plotStats = FALSE, nCores = num_cores)
     score_mat_i <- AUCell::AUCell_calcAUC(geneSets = genesets, rankings = gene_rankings, nCores = num_cores)
     score_mat_i <- t(SummarizedExperiment::assay(score_mat_i, 'AUC'))
     score_mat <- rbind(score_mat, score_mat_i)

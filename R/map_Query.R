@@ -104,8 +104,8 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
     message("All done!")
 
   # Return Seurat Object
-  slot(object = que[['RNA']], name = "data") <- exp_query
-  slot(object = que[['RNA']], name = "scale.data") <- exp_query_scaled_sync
+  que <- SetAssayData(object = que, assay = 'RNA', slot = "data", new.data = exp_query)
+  que <- SetAssayData(object = que, assay = 'RNA', slot = "scale.data", new.data = exp_query_scaled_sync)
   que[['pca']] <- Seurat::CreateDimReducObject(
     embeddings = t(Z_pca_query),
     loadings = ref_obj$loadings,
