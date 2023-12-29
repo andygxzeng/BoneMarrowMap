@@ -1,4 +1,5 @@
-### Map Query
+#' Map Query
+#'
 #' Function for mapping query data to Bone Marrow Reference
 #' This is modified from the original Seurat_Utils.R function script within the Symphony github page
 #'
@@ -12,6 +13,7 @@
 #' @param sigma Fuzziness parameter for soft clustering (sigma = 1 is hard clustering). Default is 0.1
 #'
 #' @import symphony
+#' @importFrom dplyr %>%
 #' @importFrom stats model.matrix
 #' @importFrom stats sd
 #' @importFrom Seurat CreateSeuratObject
@@ -20,12 +22,14 @@
 #' @importFrom uwot umap_transform
 #' @importFrom Matrix Matrix
 #' @importFrom purrr reduce
-#' @return A Seurat object with mapped harmony and umap embeddings. Expression data is in the SymphonyQuery
+#' @importFrom purrr map
+#' @return A Seurat object with mapped harmony and umap embeddings. Expression data is in the RNA
 #' @export
 #'
 map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose = TRUE,
                       do_normalize = TRUE, do_umap = TRUE, sigma = 0.1)
 {
+  #environment(map_Query) <- environment(symphony::mapQuery)
 
   que <- Seurat::CreateSeuratObject(
     counts=exp_query,
@@ -64,14 +68,14 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
     message("Correcting query batch effects")
   if (!is.null(vars)) {
     design = droplevels(metadata_query)[, vars] %>% as.data.frame()
-    onehot = design %>% purrr::map(function(.x) {
+    onehot = design %>% map(function(.x) {
       if (length(unique(.x)) == 1) {
         rep(1, length(.x))
       }
       else {
         stats::model.matrix(~0 + .x)
       }
-    }) %>% purrr::reduce(cbind)
+    }) %>% reduce(cbind)
     Xq = cbind(1, intercept = onehot) %>% t()
   }
   else {
@@ -100,8 +104,8 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
     message("All done!")
 
   # Return Seurat Object
-  que@assays$RNA@data <- exp_query
-  que@assays$RNA@scale.data <- exp_query_scaled_sync
+  slot(object = que[['RNA']], name = "data") <- exp_query
+  slot(object = que[['RNA']], name = "scale.data") <- exp_query_scaled_sync
   que[['pca']] <- Seurat::CreateDimReducObject(
     embeddings = t(Z_pca_query),
     loadings = ref_obj$loadings,
@@ -127,4 +131,3 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
   return(que)
 
 }
-

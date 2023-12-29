@@ -10,7 +10,7 @@
 #' @importFrom AUCell AUCell_buildRankings
 #' @importFrom AUCell AUCell_calcAUC
 #' @importFrom SummarizedExperiment assay
-#' @import doMC
+#' @import doSNOW
 #' @return A matrix of AUCell scores for each geneset for each cell in the input dataset
 #'
 AUCell_batch <- function(inp_data, genesets, num_batches = 10, num_cores = 1) {
