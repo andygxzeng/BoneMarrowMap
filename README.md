@@ -20,10 +20,13 @@ This package is in active development. Pre-print coming soon.
 ## Installation
 
 ```
-# install dependencies 
-BiocManager::install("AUCell")
+# install dependencies
+if(!require(BiocManager, quietly = TRUE)) install.packages("BiocManager")
+BiocManager::install(c("AUCell", "doMC"))
+if(!require(devtools, quietly = TRUE)) install.packages("devtools")
 devtools::install_github("jaredhuling/jcolors") # dependency that is no longer on CRAN
-# install package
+
+# install BoneMarrowMap package
 devtools::install_github('andygxzeng/BoneMarrowMap')
 ```
 
