@@ -1,4 +1,5 @@
 #' KNN Prediction of annotation label from reference to query
+#'
 #' This is modified from the original Seurat_Utils.R script within the Symphony github page
 #'
 #' @param query_obj Query Seurat object as returned by map_Query
@@ -21,13 +22,13 @@ knnPredict_Seurat <- function(query_obj, ref_obj, label_transfer, col_name, k = 
   }
 
   if (confidence) {
-    knn_pred <- class::knn(t(ref_obj$Z_corr), Seurat::Embeddings(query_obj, 'harmony'),
+    knn_pred <- class::knn(t(ref_obj$Z_corr), Seurat::Embeddings(query_obj, 'harmony_projected'),
                            ref_obj$meta_data[[label_transfer]], k = k, prob = TRUE)
     knn_prob = attributes(knn_pred)$prob
     query_obj@meta.data[[col_name]] <- knn_pred
     query_obj@meta.data[paste0(col_name, '_prob')] = knn_prob
   } else {
-    knn_pred <- class::knn(t(ref_obj$Z_corr), Seurat::Embeddings(query_obj, 'harmony'),
+    knn_pred <- class::knn(t(ref_obj$Z_corr), Seurat::Embeddings(query_obj, 'harmony_projected'),
                            ref_obj$meta_data[[col_name]], k = k, prob = FALSE)
     query_obj@meta.data[[col_name]] <- knn_pred
   }

@@ -44,10 +44,10 @@ save_ProjectionResults = function(query_obj, file_name, celltype_label = 'predic
   if(!is.null(celltype_label)){
     if (!celltype_KNNprob_label %in% colnames(query_obj@meta.data)) {
         warning('KNN prob for label \"{celltype_label}\" not found in the query metadata. This will not be saved to the annotation file.')
-        projection_results <- projection_results %>% dplyr::bind_cols(query_obj@meta.data %>% dplyr::select(all_of(celltype_label)))
+        projection_results <- projection_results %>% dplyr::bind_cols(query_obj@meta.data %>% dplyr::select(contains(celltype_label)))
     } else {
       projection_results <- projection_results %>%
-        dplyr::bind_cols(query_obj@meta.data %>% dplyr::select(all_of(celltype_label), all_of(celltype_KNNprob_label)))
+        dplyr::bind_cols(query_obj@meta.data %>% dplyr::select(contains(celltype_label), all_of(celltype_KNNprob_label)))
     }
   }
   # Add pseudotime annotations if not null

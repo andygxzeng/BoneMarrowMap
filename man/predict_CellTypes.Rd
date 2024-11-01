@@ -11,7 +11,8 @@ predict_CellTypes(
   k = 30,
   mapQC_col = "mapping_error_QC",
   initial_label = "initial_CellType",
-  final_label = "predicted_CellType"
+  final_label = "predicted_CellType",
+  include_broad = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ predict_CellTypes(
 \item{initial_label}{Column name to assign initial cell type assignments to, prior to mapQC filtering}
 
 \item{final_label}{Column name to assign final cell type assignments to, following mapQC filtering}
+
+\item{include_broad}{Whether to include broad celltype assignments. If so, ref_label must be assigned as "CellType_Annotation"}
 }
 \value{
 A Seurat object, with predicted CellType labels stored in the 'final_label' column of the meta.data. All predicted labels including cells that failed QC can be found in 'initial_label'.
