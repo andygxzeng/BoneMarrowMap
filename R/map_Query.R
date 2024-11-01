@@ -106,23 +106,23 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
   # Return Seurat Object
   que <- SetAssayData(object = que, assay = 'RNA', slot = "data", new.data = exp_query)
   que <- SetAssayData(object = que, assay = 'RNA', slot = "scale.data", new.data = exp_query_scaled_sync)
-  que[['pca']] <- Seurat::CreateDimReducObject(
+  que[['pca_projected']] <- Seurat::CreateDimReducObject(
     embeddings = t(Z_pca_query),
     loadings = ref_obj$loadings,
     stdev = as.numeric(apply(Z_pca_query, 1, stats::sd)),
     assay = 'RNA',
     key = 'pca_'
   )
-  que[['harmony']] <- Seurat::CreateDimReducObject(
+  que[['harmony_projected']] <- Seurat::CreateDimReducObject(
     embeddings = t(Zq_corr),
     stdev = as.numeric(apply(Zq_corr, 1, stats::sd)),
     assay = 'RNA',
     key = 'harmony_',
     misc=list(R=R_query)
   )
-  que <- Seurat::ProjectDim(que, reduction = 'harmony', overwrite = TRUE, verbose = FALSE)
+  que <- suppressWarnings(Seurat::ProjectDim(que, reduction = 'harmony_projected', overwrite = TRUE, verbose = FALSE))
   if (do_umap) {
-    que[['umap']] <- Seurat::CreateDimReducObject(
+    que[['umap_projected']] <- Seurat::CreateDimReducObject(
       embeddings = umap_query,
       assay = 'RNA',
       key = 'umap_'

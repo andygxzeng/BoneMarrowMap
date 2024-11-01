@@ -43,7 +43,7 @@ plot_MappingErrorQC <- function(query, mapQC_values = 'mapping_error_score', map
     ggplot2::ggtitle('MapQC vs RNA Counts')
 
   # Visualize mapping error QC on the UMAP
-  p3 <- Seurat::DimPlot(query, reduction = 'umap', group.by = c(mapQC_class), raster=FALSE)
+  p3 <- Seurat::DimPlot(query, reduction = 'umap_projected', group.by = c(mapQC_class), raster=FALSE)
 
   # Visualize percent Hemoglobin genes, true Poly/Orthochromatic Erythroblasts will have >50% Hb
   p4 <- query@meta.data %>%
