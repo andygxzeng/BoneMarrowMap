@@ -47,7 +47,7 @@ download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras
 
 ## [Leukemia Projection Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap_Extras/blob/main/LeukemiaProjection_Tutorial.nb.html)
 
-We have also used this tool extensively for the mapping of leukemic blasts spanning all various acute and chronic leukemias, except T-ALL. Classification of leukemia depends on  lineage-specific features identified by morphology and immunophenotyping. Projection of individual leukemic blasts based on thousands of transcriptomic lineage markers enables precise mapping of cellular states beyond what can be achieved in the clinic today. 
+We have also used this tool extensively for the mapping of leukemic blasts spanning all various acute and chronic leukemias, except T-ALL. Classification of leukemia depends on lineage-specific features identified by morphology and immunophenotyping. Projection of individual leukemic blasts based on thousands of transcriptomic lineage markers enables precise mapping of cellular states beyond what can be achieved in the clinic today. 
 
 After completing the standard tutorial, please see the [leukemia projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/BoneMarrowMap_Extras/blob/main/LeukemiaProjection_Tutorial.nb.html) to download an example dataset of three diverse AMLs and perform mapping, classification, pseudotime prediction, and composition analysis. This tutorial covers special considerations in mapping QC for leukemia samples and provides additional functions to score leukemia cells for functionally validated LSC signatures. 
 
@@ -56,6 +56,18 @@ To run the leukemia mapping tutorial within R markdown, you can download the Rmd
 # Download R Notebook with mapping tutorial for leukemic samples
 download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/main/LeukemiaProjection_Tutorial.Rmd', 
               destfile = 'LeukemiaProjection_Tutorial.Rmd')
+```
+
+
+## [B-cell Development Projection Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/b_development_map/blob/main/BALL_Projection_Example.nb.html)
+
+For those interested in B-cell development and B-cell acute lymphoblastic leukemia, we have a second reference map of human B-cell development derived from fetal and post-natal tissue sources. This can be achieved through a second round of projection onto our B-cell development atlas. Please see our [B-cell Development projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/b_development_map/blob/main/BALL_Projection_Example.nb.html) to download an example dataset of two phenotypically diverse B-ALL samples and perform mapping and classification using both reference atlases. To cite or learn more about this B-cell differentiation atlas and how we applied it to B-ALL, please see this pre-print: https://www.biorxiv.org/content/10.1101/2023.12.04.569954
+
+To run the B-cell development mapping tutorial within R markdown, you can download the Rmd file directly from your R console:
+```
+# Download R Notebook with mapping tutorial for leukemic samples
+download.file('https://raw.githubusercontent.com/andygxzeng/b_development_map/main/BALL_Projection_Example.Rmd', 
+              destfile = 'BALL_Projection_Example.Rmd')
 ```
 
 
@@ -84,16 +96,16 @@ library(BoneMarrowMap)
 projection_path = './'
 
 # Download Bone Marrow Reference - 344 Mb
-curl::curl_download('https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrow_RefMap_SymphonyRef.rds', 
-                    destfile = paste0(projection_path, 'BoneMarrow_RefMap_SymphonyRef.rds'))
+curl::curl_download('https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrowMap_SymphonyReference.rds', 
+                    destfile = paste0(projection_path, 'BoneMarrowMap_SymphonyReference.rds'))
 # Download uwot model file - 221 Mb
-curl::curl_download('https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrow_RefMap_uwot_model.uwot', 
-                    destfile = paste0(projection_path, 'BoneMarrow_RefMap_uwot_model.uwot'))
+curl::curl_download('https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrowMap_uwot_model.uwot', 
+                    destfile = paste0(projection_path, 'BoneMarrowMap_uwot_model.uwot'))
 
 # Load Symphony reference
-ref <- readRDS(paste0(projection_path, 'BoneMarrow_RefMap_SymphonyRef.rds'))
+ref <- readRDS(paste0(projection_path, 'BoneMarrowMap_SymphonyReference.rds'))
 # Set uwot path for UMAP projection
-ref$save_uwot_path <- paste0(projection_path, 'BoneMarrow_RefMap_uwot_model.uwot')
+ref$save_uwot_path <- paste0(projection_path, 'BoneMarrowMap_uwot_model.uwot')
 
 # Visualize Bone Marrow reference
 ReferenceSeuratObj <- create_ReferenceObject(ref)
@@ -138,7 +150,7 @@ query <- predict_CellTypes(
   final_label = 'predicted_CellType'  # celltype assignments with map QC failing cells assigned as NA
 ) 
 
-DimPlot(subset(query, mapping_error_QC == 'Pass'), reduction = 'umap', group.by = c('predicted_CellType'), raster=FALSE, label=TRUE, label.size = 4)
+DimPlot(subset(query, mapping_error_QC == 'Pass'), group.by = c('predicted_CellType'), label=TRUE, label.size = 4)
 ```
 
 ### Predict Pseudotime along the Hematopoietic Hierarchy (< 1min)
