@@ -16,5 +16,5 @@ Description: This is a package enabling rapid and accurate projection onto a cur
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: symphony, Seurat, ggpubr, ggpointdensity, jcolors, RANN, class, dplyr, ggplot2, purrr, tibble, tidyr, uwot, grDevices, Matrix, AUCell, SummarizedExperiment
-RoxygenNote: 7.2.3
+Imports: symphony, Seurat, ggpubr, ggpointdensity, jcolors, RANN, class, dplyr, ggplot2, purrr, tibble, tidyr, uwot, grDevices, Matrix, AUCell, BiocNeighbors, SummarizedExperiment
+RoxygenNote: 7.3.2
