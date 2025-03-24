@@ -10,7 +10,7 @@ established through decades of functional studies. In particular, our transcript
 
 We provide functions to rapidly and accurately map query scRNA-seq profiles of either normal or leukemic hematopoietic cells onto our bone marrow atlas. 
 Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Composition analysis can be performed from raw count matrices within minutes
-(~10min total for ~10,000 cells on a personal laptop).
+(<10 min total for ~100,000 single cells on a personal laptop).
 
 To cite this package or learn more, please refer to the bioRxiv pre-print: https://www.biorxiv.org/content/10.1101/2023.12.26.573390
 
@@ -22,7 +22,7 @@ To cite this package or learn more, please refer to the bioRxiv pre-print: https
 ```
 # install dependencies
 if(!require(BiocManager, quietly = TRUE)) install.packages("BiocManager")
-BiocManager::install(c("AUCell", "doMC"))
+BiocManager::install(c("AUCell", "doMC", "BiocNeighbors"))
 if(!require(devtools, quietly = TRUE)) install.packages("devtools")
 devtools::install_github("jaredhuling/jcolors") # dependency that is no longer on CRAN
 
@@ -130,7 +130,7 @@ batchvar <- 'sampleID'
 
 # Map query dataset using Symphony 
 query <- map_Query(
-    exp_query = query@assays$RNA@counts, 
+    exp_query = query[['RNA']]@counts, 
     metadata_query = query@meta.data,
     ref_obj = ref,
     vars = batchvar

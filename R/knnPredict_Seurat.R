@@ -14,7 +14,7 @@
 #' @importFrom Seurat Embeddings
 #' @return A Seurat object, with predicted reference labels stored in the 'col_name' column of the meta.data
 #' @export
-#' 
+#'
 
 knnPredict_Seurat <- function(query_obj, ref_obj, label_transfer, col_name, k = 5, confidence = TRUE, seed = 0)
 {
@@ -22,9 +22,8 @@ knnPredict_Seurat <- function(query_obj, ref_obj, label_transfer, col_name, k = 
   if (!label_transfer %in% colnames(ref_obj$meta_data)) {
     stop('Label \"{label_transfer}\" is not available in the reference metadata.')
   }
-    knn_pred <- BiocNeighbors::queryKNN(X = t(ref_obj$Z_corr), 
-										query = Seurat::Embeddings(query_obj, 'harmony_projected'), 
-										k = k)
+    knn_pred <- BiocNeighbors::queryKNN(X = t(ref_obj$Z_corr),
+                                        query = Seurat::Embeddings(query_obj, 'harmony_projected'), k = k)
 
 	knn_pred_labels = apply(knn_pred$index,1, function(x) {
 		label = names(which.max(table(ref_obj$meta_data[,label_transfer][x])))
@@ -36,7 +35,7 @@ knnPredict_Seurat <- function(query_obj, ref_obj, label_transfer, col_name, k = 
 	)
 	if (confidence) {
 		knn_prob = apply(knn_pred$index, 1, function(x) {
-					max(table(ref$meta_data[,label_transfer][x]))/k
+					max(table(ref_obj$meta_data[,label_transfer][x]))/k
 				})
 		query_obj@meta.data[paste0(col_name, '_prob')] = knn_prob
 	}
