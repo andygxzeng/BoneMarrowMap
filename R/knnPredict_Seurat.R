@@ -10,27 +10,37 @@
 #' @param confidence Whether to return KNN confidence scores (proportion of neighbours voting for the predicted annotation)
 #' @param seed random seed (k-NN has some stochasticity in the case of ties)
 #'
-#' @importFrom class knn
+#' @importFrom BiocNeighbors queryKNN
 #' @importFrom Seurat Embeddings
 #' @return A Seurat object, with predicted reference labels stored in the 'col_name' column of the meta.data
 #' @export
+#' 
+
 knnPredict_Seurat <- function(query_obj, ref_obj, label_transfer, col_name, k = 5, confidence = TRUE, seed = 0)
 {
   set.seed(seed)
   if (!label_transfer %in% colnames(ref_obj$meta_data)) {
     stop('Label \"{label_transfer}\" is not available in the reference metadata.')
   }
+    knn_pred <- BiocNeighbors::queryKNN(X = t(ref_obj$Z_corr), 
+										query = Seurat::Embeddings(query_obj, 'harmony_projected'), 
+										k = k)
 
-  if (confidence) {
-    knn_pred <- class::knn(t(ref_obj$Z_corr), Seurat::Embeddings(query_obj, 'harmony_projected'),
-                           ref_obj$meta_data[[label_transfer]], k = k, prob = TRUE)
-    knn_prob = attributes(knn_pred)$prob
-    query_obj@meta.data[[col_name]] <- knn_pred
-    query_obj@meta.data[paste0(col_name, '_prob')] = knn_prob
-  } else {
-    knn_pred <- class::knn(t(ref_obj$Z_corr), Seurat::Embeddings(query_obj, 'harmony_projected'),
-                           ref_obj$meta_data[[col_name]], k = k, prob = FALSE)
-    query_obj@meta.data[[col_name]] <- knn_pred
-  }
+	knn_pred_labels = apply(knn_pred$index,1, function(x) {
+		label = names(which.max(table(ref_obj$meta_data[,label_transfer][x])))
+		if(length(label) > 1) {
+			label = unlist(label)[sample(1,length(label),replace = FALSE)]
+		}
+		label
+	  }
+	)
+	if (confidence) {
+		knn_prob = apply(knn_pred$index, 1, function(x) {
+					max(table(ref$meta_data[,label_transfer][x]))/k
+				})
+		query_obj@meta.data[paste0(col_name, '_prob')] = knn_prob
+	}
+    query_obj@meta.data[[col_name]] <- as.character(knn_pred_labels)
+
   return(query_obj)
 }

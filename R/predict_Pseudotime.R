@@ -13,7 +13,7 @@
 #' @param final_label Column name to assign final pseudotime annotations to, following mapQC filtering
 #'
 #' @importFrom dplyr %>%
-#' @importFrom RANN nn2
+#' @importFrom BiocNeighbors queryKNN
 #' @importFrom Seurat Embeddings
 #' @return A Seurat object, with annotated pseudotime labels stored in the 'final_label' column of the meta.data.
 #' @export
@@ -29,9 +29,10 @@ predict_Pseudotime <- function(query_obj, ref_obj, pseudotime_label = 'Pseudotim
   ref_pseudotime <- ref_obj$meta_data[pseudotime_label] %>% data.matrix()
 
   # Assign pseudotime as median of k-nearest UMAP neighbours
-  query_nn <- RANN::nn2(data = ref_obj$umap$embedding,
-                        query = query_obj@reductions$umap@cell.embeddings, k = k, eps = 0)
-  query_obj@meta.data[[initial_label]] <- apply(query_nn$nn.idx, 1, function(x) {median(ref_pseudotime[x,])})
+  query_nn <- BiocNeighbors::queryKNN(X = ref_obj$umap$embedding,
+                        query = query_obj@reductions$umap@cell.embeddings, k = k)
+						
+  query_obj@meta.data[[initial_label]] <- apply(query_nn$index, 1, function(x) {median(ref_pseudotime[x,])})
 
   if(is.null(mapQC_class)){
     ## If no mapping error QC, final celltype same as initial.
@@ -44,6 +45,5 @@ predict_Pseudotime <- function(query_obj, ref_obj, pseudotime_label = 'Pseudotim
     query_obj@meta.data[[final_label]] <- ifelse(query_obj@meta.data[[mapQC_class]] %in% c('Fail', 'fail'), NA,
                                                  query_obj@meta.data[[initial_label]])
   }
-
   return(query_obj)
 }

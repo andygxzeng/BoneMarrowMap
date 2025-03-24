@@ -31,7 +31,7 @@ predict_CellTypes <- function(query_obj, ref_obj, ref_label = 'CellType_Annotati
     col_name = initial_label,
     k = k
   )
-
+	
   # Convert initial celltype to character
   query_obj@meta.data[[initial_label]] <- query_obj@meta.data[[initial_label]] %>% as.character()
 
