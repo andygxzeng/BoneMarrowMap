@@ -141,7 +141,7 @@ query <- query %>% calculate_MappingError(., reference = ref, MAD_threshold = 2.
 plot_MappingErrorQC(query)
 ```
 
-### Predict Cell Types from Hematopoietic Reference Map (10,000 cells in < 10min)
+### Predict Cell Types from Hematopoietic Reference Map (10,000 cells in < 1min)
 ```
 # Predict Hematopoietic Cell Types by KNN classification
 query <- predict_CellTypes(
