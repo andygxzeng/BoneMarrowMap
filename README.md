@@ -12,7 +12,8 @@ We provide functions to rapidly and accurately map query scRNA-seq profiles of e
 Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Composition analysis can be performed from raw count matrices within minutes
 (<10 min total for ~100,000 single cells on a personal laptop).
 
-To cite this package or learn more, please refer to the bioRxiv pre-print: https://www.biorxiv.org/content/10.1101/2023.12.26.573390
+To cite this package or learn more, please refer to the publication in Blood Cancer Discovery: 
+https://aacrjournals.org/bloodcancerdiscov/article/doi/10.1158/2643-3230.BCD-24-0342/761938/Single-cell-Transcriptional-Atlas-of-Human
 
 ![BoneMarrowMap](https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/main/BoneMarrow_ReferenceMap.png)
 
