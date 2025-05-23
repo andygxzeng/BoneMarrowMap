@@ -15,6 +15,8 @@ Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Compositi
 To cite this package or learn more, please refer to the publication in Blood Cancer Discovery: 
 https://aacrjournals.org/bloodcancerdiscov/article/doi/10.1158/2643-3230.BCD-24-0342/761938/Single-cell-Transcriptional-Atlas-of-Human
 
+To explore this dataset interactively please use our [CellxGene portal](https://cellxgene.cziscience.com/collections/f6c50495-3361-40ed-a819-fb9644396ed9), or download annotated single-cell objects can also be downloaded in scanpy format [(h5ad file)](https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrowMap_Annotated_Dataset_expandedFeatures.h5ad) or in Seurat format [(RDS file)](https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrowMap_Annotated_Dataset_expandedFeatures.rds).
+
 ![BoneMarrowMap](https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras/main/BoneMarrow_ReferenceMap.png)
 
 
