@@ -14,13 +14,16 @@ score_Genesets_AUCell(
 )
 }
 \arguments{
-\item{scrna}{Seurat object to be scored by AUCell. "counts" slot within RNA assay will be used so this must not be empty.}
+\item{scrna}{Seurat object to be scored by AUCell. "counts" layer within RNA assay will be used so this must not be empty.}
 
 \item{genesets}{List of lists, which each component list being the genes that belong to an individual geneset to score by AUCell.}
 
 \item{nbatches}{Number of batches to split the Cell x Gene expression matrix into. These will be processed sequentially to save memory.}
 
-\item{ncores}{Number of cores to use for parallel computation of AUCell scores.}
+\item{ncores}{Number of cores to use for parallel computation. Default is 1 (serial).
+BoneMarrowMap automatically chooses the AUCell backend:
+newer AUCell versions use AUCell_run (with BiocParallel if available),
+while older AUCell versions use AUCell_buildRankings + AUCell_calcAUC.}
 
 \item{output}{Preferred output format of AUCell scores. This can either be "metadata", "assay", or "dataframe". "metadata" returns a seurat object with AUCell scores in the metadata. "assay" returns a seurat object with AUCell scores as a separate assay. "dataframe" returns a dataframe with AUCell scores for each cell.}
 

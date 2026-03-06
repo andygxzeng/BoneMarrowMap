@@ -1,7 +1,7 @@
 Package: BoneMarrowMap
 Type: Package
 Title: Single cell reference mapping onto Bone Marrow Hematopoiesis
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(person("Andy", "Zeng", email = "andy.zeng@uhnresearch.ca", role = c("aut", "cre")))
 Maintainer: Andy Zeng <andy.zeng@mail.utoronto.ca>
 Description: This is a package enabling rapid and accurate projection onto a curated scRNA-seq atlas of Bone Marrow hematopoiesis. 
@@ -12,9 +12,9 @@ Description: This is a package enabling rapid and accurate projection onto a cur
     that are well established in experimental hematology. In particular, our transcriptional HSC state is highly concordant with functional LT-HSCs.
     We provide functions to rapidly and accurately map query scRNA-seq data from normal or leukemic hematopoietic cells onto our bone marrow atlas. 
     Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Composition analysis can be performed from raw count matrices within minutes
-    (~10min total for ~10,000 cells on a personal laptop).
+    (~10min total for ~100,000 cells on a personal laptop).
 License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: symphony, Seurat, ggpubr, ggpointdensity, jcolors, dplyr, ggplot2, purrr, tibble, tidyr, uwot, grDevices, Matrix, AUCell, BiocNeighbors, SummarizedExperiment
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

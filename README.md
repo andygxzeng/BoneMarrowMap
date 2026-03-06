@@ -12,8 +12,7 @@ We provide functions to rapidly and accurately map query scRNA-seq profiles of e
 Mapping, QC Filtering, CellType prediction, Pseudotime prediction, and Composition analysis can be performed from raw count matrices within minutes
 (<10 min total for ~100,000 single cells on a personal laptop).
 
-To cite this package or learn more, please refer to the publication in Blood Cancer Discovery: 
-https://aacrjournals.org/bloodcancerdiscov/article/doi/10.1158/2643-3230.BCD-24-0342/761938/Single-cell-Transcriptional-Atlas-of-Human
+To cite this package or learn more, please refer to our publication: [Zeng et al, Blood Cancer Discovery 2025](https://pubmed.ncbi.nlm.nih.gov/40294241/)
 
 To explore this dataset interactively please use our [CellxGene portal](https://cellxgene.cziscience.com/collections/f6c50495-3361-40ed-a819-fb9644396ed9), or download annotated single-cell objects can also be downloaded in scanpy format [(h5ad file)](https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrowMap_Annotated_Dataset_expandedFeatures.h5ad) or in Seurat format [(RDS file)](https://bonemarrowmap.s3.us-east-2.amazonaws.com/BoneMarrowMap_Annotated_Dataset_expandedFeatures.rds).
 
@@ -66,7 +65,9 @@ download.file('https://raw.githubusercontent.com/andygxzeng/BoneMarrowMap_Extras
 
 ## [B-cell Development Projection Tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/b_development_map/blob/main/BALL_Projection_Example.nb.html)
 
-For those interested in B-cell development and B-cell acute lymphoblastic leukemia, we have a second reference map of human B-cell development derived from fetal and post-natal tissue sources. This can be achieved through a second round of projection onto our B-cell development atlas. Please see our [B-cell Development projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/b_development_map/blob/main/BALL_Projection_Example.nb.html) to download an example dataset of two phenotypically diverse B-ALL samples and perform mapping and classification using both reference atlases. To cite or learn more about this B-cell differentiation atlas and how we applied it to B-ALL, please see this pre-print: https://www.biorxiv.org/content/10.1101/2023.12.04.569954
+For those interested in B-cell development and B-cell acute lymphoblastic leukemia, we have a second reference map of human B-cell development derived from fetal and post-natal tissue sources. This can be achieved through a second round of projection onto our B-cell development atlas. 
+Please see our [B-cell Development projection tutorial](https://htmlpreview.github.io/?https://github.com/andygxzeng/b_development_map/blob/main/BALL_Projection_Example.nb.html) to download an example dataset of two phenotypically diverse B-ALL samples and perform mapping and classification using both reference atlases. 
+To cite or learn more about this B-cell differentiation atlas and how we applied it to B-ALL, please see our separate Manuscript: [Iacobucci\*, Zeng\*, Gao\*, Garcia-Prat\*, et al. Nature Cancer 2025](https://pubmed.ncbi.nlm.nih.gov/40579588/)
 
 To run the B-cell development mapping tutorial within R markdown, you can download the Rmd file directly from your R console:
 ```
@@ -135,8 +136,7 @@ batchvar <- 'sampleID'
 
 # Map query dataset using Symphony 
 query <- map_Query(
-    exp_query = query[['RNA']]@counts, 
-    metadata_query = query@meta.data,
+    query = query,  # load in query seurat object. Can also load counts and meta-data separately. 
     ref_obj = ref,
     vars = batchvar
 )
@@ -193,4 +193,3 @@ save_ProjectionResults(
   query_obj = query, 
   file_name = 'querydata_projected_labeled.csv')
 ```
-

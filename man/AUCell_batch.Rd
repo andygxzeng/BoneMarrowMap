@@ -4,7 +4,7 @@
 \alias{AUCell_batch}
 \title{Run AUCell Scoring in Batches:}
 \usage{
-AUCell_batch(inp_data, genesets, num_batches = 10, num_cores = 1)
+AUCell_batch(inp_data, genesets, num_batches = 10, ncores = 1)
 }
 \arguments{
 \item{inp_data}{Cell x Gene expression matrix with cells as columns and genes as rows. Raw counts are acceptable.}
@@ -13,7 +13,9 @@ AUCell_batch(inp_data, genesets, num_batches = 10, num_cores = 1)
 
 \item{num_batches}{Number of batches to split the Cell x Gene expression matrix into. These will be processed sequentially to save memory.}
 
-\item{num_cores}{Number of cores to use for parallel computation of AUCell scores.}
+\item{ncores}{Number of cores to use for parallel computation. Default is 1 (serial).
+For newer AUCell versions, BoneMarrowMap uses AUCell_run (and BiocParallel if available).
+For older AUCell versions, it automatically falls back to AUCell_buildRankings + AUCell_calcAUC with nCores.}
 }
 \value{
 A matrix of AUCell scores for each geneset for each cell in the input dataset
