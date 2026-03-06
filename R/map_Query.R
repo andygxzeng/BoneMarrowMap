@@ -158,12 +158,16 @@ map_Query <- function (query = NULL, exp_query = NULL, metadata_query = NULL, re
   # Transfer extra assays and reductions from input Seurat object
   if (length(extra_assays) > 0) {
     for (assay_name in extra_assays) {
-      que[[assay_name]] <- query[[assay_name]]
+      if (!assay_name %in% Seurat::Assays(que)) {
+        que[[assay_name]] <- query[[assay_name]]
+      }
     }
   }
   if (length(existing_reductions) > 0) {
     for (reduc_name in existing_reductions) {
-      que[[reduc_name]] <- query[[reduc_name]]
+      if (!reduc_name %in% Seurat::Reductions(que)) {
+        que[[reduc_name]] <- query[[reduc_name]]
+      }
     }
   }
 
