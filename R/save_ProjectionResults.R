@@ -35,8 +35,8 @@ save_ProjectionResults = function(query_obj, file_name, celltype_label = 'predic
     # CellType and Pseudotime labels from metadata
     query_obj@meta.data %>% dplyr::select(mapping_error_score, mapping_error_QC),
     # umap coordinates
-    data.frame(query_obj@reductions$umap@cell.embeddings) %>%
-      dplyr::rename(UMAP1_projected = umap_1, UMAP2_projected = umap_2)
+    data.frame(Seurat::Embeddings(query_obj, reduction = 'umap_projected')) %>%
+      dplyr::rename(UMAP1_projected = umapprojected_1, UMAP2_projected = umapprojected_2)
   )
 
 

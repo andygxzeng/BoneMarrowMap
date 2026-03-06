@@ -34,17 +34,17 @@ plot_Projection_BM <- function(query_obj, batch_key, sample_name, ref_obj, Hiera
   # Prepare query_obj data for that sample
   dat <- query_obj@meta.data %>% tibble::rownames_to_column('Cell') %>%
     dplyr::filter(.data[[batch_key]] == sample_name) %>%
-    dplyr::left_join(query_obj@reductions$umap@cell.embeddings %>% data.frame() %>% tibble::rownames_to_column('Cell'), by = 'Cell') %>%
+    dplyr::left_join(Seurat::Embeddings(query_obj, reduction = 'umap_projected') %>% data.frame() %>% tibble::rownames_to_column('Cell'), by = 'Cell') %>%
     dplyr::filter(mapping_error_QC == 'Pass') %>%
     dplyr::mutate(ref_query = 'query')
   if(Hierarchy_only){
-    dat <- dat %>% dplyr::filter(umap_1 > -5)
+    dat <- dat %>% dplyr::filter(umapprojected_1 > -5)
   }
 
   # Prepare background from Reference UMAP
-  background <- data.frame(ref_obj$umap$embedding) %>% dplyr::rename(umap_1 = X1, umap_2 = X2)
+  background <- data.frame(ref_obj$umap$embedding) %>% dplyr::rename(umapprojected_1 = X1, umapprojected_2 = X2)
   if(Hierarchy_only){
-    background <- background %>% dplyr::filter(umap_1 > -5)
+    background <- background %>% dplyr::filter(umapprojected_1 > -5)
   }
   if(downsample_reference){
     set.seed(123)
@@ -54,11 +54,11 @@ plot_Projection_BM <- function(query_obj, batch_key, sample_name, ref_obj, Hiera
   ## Density plot overlaid on the background
   heatpalette <- grDevices::heat.colors(12)
   p <- dat %>%
-    ggplot2::ggplot(aes(x = umap_1, y = umap_2)) +
+    ggplot2::ggplot(aes(x = umapprojected_1, y = umapprojected_2)) +
     ggplot2::geom_point(data = background, color='#E3E3E3', size=0.05, alpha=0.5) +
     ggpointdensity::geom_pointdensity(size=query_point_size) +
     jcolors::scale_color_jcolors_contin("pal3", reverse = TRUE, bias = 1.75) +
-    ggplot2::geom_density_2d(alpha=0.4, color='black', h = 1.5, size=query_contour_size) +
+    ggplot2::geom_density_2d(alpha=0.4, color='black', h = c(1.5, 1.5), size=query_contour_size) +
     ggplot2::theme_void() + ggplot2::ggtitle(sample_name) +
     ggplot2::theme(strip.text.x = ggplot2::element_text(size=18), legend.position='none')
 

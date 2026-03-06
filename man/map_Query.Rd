@@ -5,8 +5,9 @@
 \title{Map Query}
 \usage{
 map_Query(
-  exp_query,
-  metadata_query,
+  query = NULL,
+  exp_query = NULL,
+  metadata_query = NULL,
   ref_obj,
   vars = NULL,
   verbose = TRUE,
@@ -16,9 +17,12 @@ map_Query(
 )
 }
 \arguments{
-\item{exp_query}{Query gene expression (genes by cells). Raw counts are preferred.}
+\item{query}{A Seurat object containing RNA counts and metadata. When provided, exp_query and metadata_query are ignored. 
+Extra assays (e.g. ADT), dimensional reductions, and graphs from the input object will be preserved in the output.}
 
-\item{metadata_query}{Query metadata (cells by attributes)}
+\item{exp_query}{Query gene expression (genes by cells). Raw counts are preferred. Optional if query is provided.}
+
+\item{metadata_query}{Query metadata (cells by attributes). Optional if query is provided.}
 
 \item{ref_obj}{Single cell hematopoiesis reference}
 

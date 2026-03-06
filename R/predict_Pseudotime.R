@@ -30,7 +30,7 @@ predict_Pseudotime <- function(query_obj, ref_obj, pseudotime_label = 'Pseudotim
 
   # Assign pseudotime as median of k-nearest UMAP neighbours
   query_nn <- BiocNeighbors::queryKNN(X = ref_obj$umap$embedding,
-                        query = query_obj@reductions$umap@cell.embeddings, k = k)
+                        query = Seurat::Embeddings(query_obj, reduction = 'umap_projected'), k = k)
 						
   query_obj@meta.data[[initial_label]] <- apply(query_nn$index, 1, function(x) {median(ref_pseudotime[x,])})
 

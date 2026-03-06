@@ -3,8 +3,10 @@
 #' Function for mapping query data to Bone Marrow Reference
 #' This is modified from the original Seurat_Utils.R function script within the Symphony github page
 #'
-#' @param exp_query Query gene expression (genes by cells). Raw counts are preferred.
-#' @param metadata_query Query metadata (cells by attributes)
+#' @param query A Seurat object containing RNA counts and metadata. When provided, exp_query and metadata_query are ignored. 
+#'    Extra assays (e.g. ADT), dimensional reductions, and graphs from the input object will be preserved in the output.
+#' @param exp_query Query gene expression (genes by cells). Raw counts are preferred. Optional if query is provided.
+#' @param metadata_query Query metadata (cells by attributes). Optional if query is provided.
 #' @param ref_obj Single cell hematopoiesis reference
 #' @param vars Query batch variable(s) to integrate over (column names in metadata)
 #' @param verbose Verbose output
@@ -19,6 +21,9 @@
 #' @importFrom Seurat CreateSeuratObject
 #' @importFrom Seurat CreateDimReducObject
 #' @importFrom Seurat ProjectDim
+#' @importFrom Seurat Assays
+#' @importFrom Seurat Reductions
+#' @importFrom Seurat GetAssayData
 #' @importFrom uwot umap_transform
 #' @importFrom Matrix Matrix
 #' @importFrom purrr reduce
@@ -26,11 +31,28 @@
 #' @return A Seurat object with mapped harmony and umap embeddings. Expression data is in the RNA
 #' @export
 #'
-map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose = TRUE,
+map_Query <- function (query = NULL, exp_query = NULL, metadata_query = NULL, ref_obj, vars = NULL, verbose = TRUE,
                       do_normalize = TRUE, do_umap = TRUE, sigma = 0.1)
 {
   #environment(map_Query) <- environment(symphony::mapQuery)
 
+  # Handle Seurat object vs matrix + metadata input
+  if (!is.null(query) && inherits(query, "Seurat")) {
+    if (packageVersion("Seurat") >= numeric_version("5.0.0")) {
+      exp_query <- Seurat::GetAssayData(query, assay = 'RNA', layer = 'counts')
+    } else {
+      exp_query <- Seurat::GetAssayData(query, assay = 'RNA', slot = 'counts')
+    }
+    metadata_query <- query[[]]
+    extra_assays <- setdiff(Seurat::Assays(query), "RNA")
+    existing_reductions <- Seurat::Reductions(query)
+  } else {
+    if (is.null(exp_query) || is.null(metadata_query)) {
+      stop("Must provide either a Seurat object as 'query', or both 'exp_query' and 'metadata_query'.")
+    }
+    extra_assays <- character(0)
+    existing_reductions <- character(0)
+  }
   que <- Seurat::CreateSeuratObject(
     counts=exp_query,
     meta.data=metadata_query,
@@ -104,20 +126,25 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
     message("All done!")
 
   # Return Seurat Object
-  que <- SetAssayData(object = que, assay = 'RNA', slot = "data", new.data = exp_query)
-  que <- SetAssayData(object = que, assay = 'RNA', slot = "scale.data", new.data = exp_query_scaled_sync)
+  if (packageVersion("Seurat") >= numeric_version("5.0.0")) {
+    que <- Seurat::SetAssayData(object = que, assay = 'RNA', layer = "data", new.data = exp_query)
+    que <- Seurat::SetAssayData(object = que, assay = 'RNA', layer = "scale.data", new.data = exp_query_scaled_sync)
+  } else {
+    que <- Seurat::SetAssayData(object = que, assay = 'RNA', slot = "data", new.data = exp_query)
+    que <- Seurat::SetAssayData(object = que, assay = 'RNA', slot = "scale.data", new.data = exp_query_scaled_sync)
+  }
   que[['pca_projected']] <- Seurat::CreateDimReducObject(
     embeddings = t(Z_pca_query),
     loadings = ref_obj$loadings,
     stdev = as.numeric(apply(Z_pca_query, 1, stats::sd)),
     assay = 'RNA',
-    key = 'pca_'
+    key = 'pcaprojected_'
   )
   que[['harmony_projected']] <- Seurat::CreateDimReducObject(
     embeddings = t(Zq_corr),
     stdev = as.numeric(apply(Zq_corr, 1, stats::sd)),
     assay = 'RNA',
-    key = 'harmony_',
+    key = 'harmonyprojected_',
     misc=list(R=R_query)
   )
   que <- suppressWarnings(Seurat::ProjectDim(que, reduction = 'harmony_projected', overwrite = TRUE, verbose = FALSE))
@@ -125,9 +152,21 @@ map_Query <- function (exp_query, metadata_query, ref_obj, vars = NULL, verbose 
     que[['umap_projected']] <- Seurat::CreateDimReducObject(
       embeddings = umap_query,
       assay = 'RNA',
-      key = 'umap_'
+      key = 'umapprojected_'
     )
   }
+  # Transfer extra assays and reductions from input Seurat object
+  if (length(extra_assays) > 0) {
+    for (assay_name in extra_assays) {
+      que[[assay_name]] <- query[[assay_name]]
+    }
+  }
+  if (length(existing_reductions) > 0) {
+    for (reduc_name in existing_reductions) {
+      que[[reduc_name]] <- query[[reduc_name]]
+    }
+  }
+
   return(que)
 
 }

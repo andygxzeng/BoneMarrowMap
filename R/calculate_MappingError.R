@@ -22,8 +22,8 @@
 #'
 calculate_MappingError = function(query, reference, MAD_threshold = 2.5, threshold_by_donor = FALSE, donor_key = NULL) {
 
-  query_pca = t(query@reductions$pca@cell.embeddings)
-  query_R = query@reductions$harmony@misc$R
+  query_pca = t(query@reductions$pca_projected@cell.embeddings)
+  query_R = query@reductions$harmony_projected@misc$R
 
   # Calculate the Mahalanobis distance from each query cell to all centroids
   mah_dist_ks = matrix(rep(0, len = ncol(query_pca) * ncol(reference$centroids)), nrow = ncol(query_pca))
